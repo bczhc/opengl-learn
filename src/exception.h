@@ -8,7 +8,7 @@
 #include <exception>
 #include <string>
 
-class Exception : std::exception {
+class Exception : public std::exception {
 private:
     std::string message;
 

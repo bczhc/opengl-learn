@@ -7,9 +7,9 @@
 #include <cstdlib>
 #include <cassert>
 #include "renderer.h"
-
 #include "vertex_buffer.h"
 #include "index_buffer.h"
+#include "vertex_array.h"
 
 using namespace std;
 
@@ -181,16 +181,14 @@ int main() {
                 2, 3, 0
         };
 
-        u32 vao;
-        GL_CALL(glGenVertexArrays(1, &vao))
-        GL_CALL(glBindVertexArray(vao))
+        VertexArray va;
 
-        GL_CALL(VertexBuffer vb(vertices, sizeof(vertices)))
+        VertexBuffer vb(vertices, sizeof(vertices));
 
-        GL_CALL(glEnableVertexAttribArray(0))
-        GL_CALL(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(f32), nullptr))
-
-        GL_CALL(IndexBuffer ib(vertexIndices, sizeof(vertexIndices) / sizeof(vertexIndices[0])))
+        VertexBufferLayout vl;
+        vl.push<f32>(2);
+        va.addBuffer(vb, vl);
+        IndexBuffer ib(vertexIndices, sizeof(vertexIndices) / sizeof(vertexIndices[0]));
 
         GL_CALL(const ShaderSource &shaderSource = parseShaderSource(SHADER_FILE_PATH))
         GL_CALL(u32 shaderProgram = createShader(shaderSource.vertex, shaderSource.fragment))
@@ -220,7 +218,7 @@ int main() {
 
             GL_CALL(glUseProgram(shaderProgram))
             GL_CALL(glUniform4f(location, r, 0.3F, 0.8F, 1.0F))
-            GL_CALL(glBindVertexArray(vao))
+            va.bind();
             // also works without the ibo binding
 //        GL_CALL(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo))
             GL_CALL(glDrawElements(GL_TRIANGLES, sizeof(vertexIndices) / sizeof(vertexIndices[0]), GL_UNSIGNED_INT,

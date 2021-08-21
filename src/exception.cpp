@@ -4,7 +4,7 @@
 
 #include "exception.h"
 
-const char * Exception::what() const noexcept {
+const char *Exception::what() const noexcept {
     return this->message.c_str();
 }
 

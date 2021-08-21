@@ -18,6 +18,6 @@ void VertexBuffer::bind() const {
     GL_CALL(glBindBuffer(GL_ARRAY_BUFFER, bufferId))
 }
 
-void VertexBuffer::unbind() const { // NOLINT(readability-convert-member-functions-to-static)
+void VertexBuffer::unbind() const {
     GL_CALL(glBindBuffer(GL_ARRAY_BUFFER, 0))
 }

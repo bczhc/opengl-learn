@@ -4,12 +4,14 @@ project(opengl)
 set(CMAKE_CXX_STANDARD 20)
 
 add_executable(
-        demo
+        main
         src/main.cpp
         src/exception.cpp
         src/renderer.cpp
         src/vertex_buffer.cpp
         src/index_buffer.cpp
+        src/vertex_array.cpp
+        src/todo.cpp
 )
 
-target_link_libraries(demo glfw GL GLEW)
+target_link_libraries(main glfw GL GLEW)

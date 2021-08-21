@@ -18,7 +18,7 @@ void IndexBuffer::bind() const {
     GL_CALL(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, bufferId))
 }
 
-void IndexBuffer::unbind() const { // NOLINT(readability-convert-member-functions-to-static)
+void IndexBuffer::unbind() const {
     GL_CALL(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0))
 }
 
