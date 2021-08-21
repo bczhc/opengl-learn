@@ -160,10 +160,15 @@ int main() {
         return -1;
     }
 
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
     /* Create a windowed mode window and its OpenGL context */
     window = glfwCreateWindow(640, 480, "Hello World", nullptr, nullptr);
     if (!window) {
         glfwTerminate();
+        cout << "glfwCreateWindow(...) failed" << endl;
         return -1;
     }
 
@@ -191,6 +196,10 @@ int main() {
             2, 3, 0
     };
 
+    u32 vao;
+    GL_CALL(glGenVertexArrays(1, &vao))
+    GL_CALL(glBindVertexArray(vao))
+
     u32 buffer;
     GL_CALL(glGenBuffers(1, &buffer))
     GL_CALL(glBindBuffer(GL_ARRAY_BUFFER, buffer))
@@ -211,6 +220,10 @@ int main() {
     GL_CALL(GLint location = glGetUniformLocation(shaderProgram, "u_Color"))
     assert(location != -1);
 
+    GL_CALL(glBindVertexArray(0))
+    GL_CALL(glUseProgram(0))
+    GL_CALL(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0))
+
     f32 r = 0;
     f32 increment = 0.05;
 
@@ -225,8 +238,14 @@ int main() {
             increment = 0.05;
         }
         r += increment;
+
+        GL_CALL(glUseProgram(shaderProgram))
         GL_CALL(glUniform4f(location, r, 0.3F, 0.8F, 1.0F))
-        GL_CALL(glDrawElements(GL_TRIANGLES, sizeof(vertexIndices) / sizeof(vertexIndices[0]), GL_UNSIGNED_INT, nullptr))
+        GL_CALL(glBindVertexArray(vao))
+        // also works without the ibo binding
+//        GL_CALL(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo))
+        GL_CALL(glDrawElements(GL_TRIANGLES, sizeof(vertexIndices) / sizeof(vertexIndices[0]), GL_UNSIGNED_INT,
+                               nullptr))
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
