@@ -4,10 +4,31 @@
 #include "def.h"
 #include "exception.h"
 #include "option.hpp"
+#include <cstdlib>
 
 using namespace std;
 
 #define SHADER_FILE_PATH ("/home/bczhc/code/opengl/res/basic.glsl")
+
+#define GL_CALL(x) glClearError(); \
+    x;                            \
+    if (glCheckError()) {          \
+        cout << #x << __FILE__ << ' ' << __LINE__ << endl; \
+        abort();                   \
+    }
+
+void glClearError() {
+    while (glGetError() != GL_NO_ERROR);
+}
+
+bool glCheckError() {
+    GLenum error;
+    if ((error = glGetError()) != GL_NO_ERROR) {
+        cout << "[OpenGL Error] (" << error << ") ";
+        return true;
+    }
+    return false;
+}
 
 enum ShaderType {
     UNKNOWN,
@@ -168,28 +189,30 @@ int main() {
     };
 
     u32 buffer;
-    glGenBuffers(1, &buffer);
-    glBindBuffer(GL_ARRAY_BUFFER, buffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    GL_CALL(glGenBuffers(1, &buffer))
+    GL_CALL(glBindBuffer(GL_ARRAY_BUFFER, buffer))
+    GL_CALL(glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW))
 
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(f32), nullptr);
+    GL_CALL(glEnableVertexAttribArray(0))
+    GL_CALL(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(f32), nullptr))
 
     u32 ibo;
-    glGenBuffers(1, &ibo);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(vertexIndices), vertexIndices, GL_STATIC_DRAW);
+    GL_CALL(glGenBuffers(1, &ibo))
+    GL_CALL(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo))
+    GL_CALL(glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(vertexIndices), vertexIndices, GL_STATIC_DRAW))
 
-    const ShaderSource &shaderSource = parseShaderSource(SHADER_FILE_PATH);
-    u32 shaderProgram = createShader(shaderSource.vertex, shaderSource.fragment);
-    glUseProgram(shaderProgram);
+    GL_CALL(const ShaderSource &shaderSource = parseShaderSource(SHADER_FILE_PATH))
+    GL_CALL(u32 shaderProgram = createShader(shaderSource.vertex, shaderSource.fragment))
+    GL_CALL(glUseProgram(shaderProgram))
 
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window)) {
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
 
-        glDrawElements(GL_TRIANGLES, sizeof(vertexIndices) / sizeof(vertexIndices[0]), GL_UNSIGNED_INT, nullptr);
+        glClearError();
+        GL_CALL(glDrawElements(GL_TRIANGLES, sizeof(vertexIndices) / sizeof(vertexIndices[0]), GL_UNSIGNED_INT, nullptr))
+        glCheckError();
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
