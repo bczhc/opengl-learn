@@ -2,29 +2,84 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include "def.h"
+#include "exception.h"
+#include "option.hpp"
 
 using namespace std;
 
-#define VERTEX_SHADER_FILE ("/home/bczhc/code/opengl/vertex-shader.glsl")
-#define FRAGMENT_SHADER_FILE ("/home/bczhc/code/opengl/fragment-shader.glsl")
+#define SHADER_FILE_PATH ("/home/bczhc/code/opengl/res/basic.glsl")
 
-string readFileToString(const char *filename) {
-    string read;
-    FILE *fp = fopen(filename, "rb");
+enum ShaderType {
+    UNKNOWN,
+    VERTEX,
+    FRAGMENT
+};
+
+struct ShaderSource {
+    string vertex;
+    string fragment;
+};
+
+Option<string> readLine(FILE *fp) {
+    bool eof = true;
+    string line;
+    char c;
+    while (fread(&c, 1, 1, fp) != 0) {
+        eof = false;
+        if (c == '\n') {
+            break;
+        }
+        line.push_back(c);
+    }
+    if (eof) return Option<string>::getNone();
+    return Option(line);
+}
+
+ShaderSource parseShaderSource(const char *path) {
+    FILE *fp = fopen(path, "rb");
     if (fp == nullptr) {
-        cout << "Failed to read file" << endl;
-        return read;
+        throw IOException("Failed to open shader file");
     }
 
-    int bufferSize = 4096;
-    char buf[bufferSize];
-    usize readSize;
-    while ((readSize = fread(buf, 1, bufferSize, fp)) != 0) {
-        read.append(buf, readSize);
+    string vertexSrc, fragmentSrc;
+    ShaderType type = ShaderType::UNKNOWN;
+    bool shaderMarkLine = false;
+    while (true) {
+        const Option<string> &option = readLine(fp);
+        if (option.isNone()) {
+            break;
+        }
+        auto line = option.get();
+
+        if (line.starts_with("#shader vertex")) {
+            type = ShaderType::VERTEX;
+            shaderMarkLine = true;
+        }
+        if (line.starts_with("#shader fragment")) {
+            type = ShaderType::FRAGMENT;
+            shaderMarkLine = true;
+        }
+
+        if (shaderMarkLine) {
+            shaderMarkLine = false;
+            continue;
+        }
+        switch (type) {
+            case VERTEX:
+                vertexSrc.append(line).push_back('\n');
+                break;
+            case FRAGMENT:
+                fragmentSrc.append(line).push_back('\n');
+                break;
+            default:
+                break;
+        }
     }
     fclose(fp);
-
-    return read;
+    return {
+            .vertex = vertexSrc,
+            .fragment = fragmentSrc
+    };
 }
 
 u32 compileShader(const string &source, GLenum type) {
@@ -114,7 +169,8 @@ int main() {
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(f32), nullptr);
 
-    u32 shaderProgram = createShader(readFileToString(VERTEX_SHADER_FILE), readFileToString(FRAGMENT_SHADER_FILE));
+    const ShaderSource &shaderSource = parseShaderSource(SHADER_FILE_PATH);
+    u32 shaderProgram = createShader(shaderSource.vertex, shaderSource.fragment);
     glUseProgram(shaderProgram);
 
     /* Loop until the user closes the window */
