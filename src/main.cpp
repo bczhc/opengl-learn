@@ -5,6 +5,7 @@
 #include "exception.h"
 #include "option.hpp"
 #include <cstdlib>
+#include <cassert>
 
 using namespace std;
 
@@ -176,6 +177,8 @@ int main() {
 
     cout << glGetString(GL_VERSION) << endl;
 
+    glfwSwapInterval(1);
+
     f32 vertices[] = {
             -0.5F, -0.5F, // 0
             0.5F, -0.5F, // 1
@@ -205,14 +208,25 @@ int main() {
     GL_CALL(u32 shaderProgram = createShader(shaderSource.vertex, shaderSource.fragment))
     GL_CALL(glUseProgram(shaderProgram))
 
+    GL_CALL(GLint location = glGetUniformLocation(shaderProgram, "u_Color"))
+    assert(location != -1);
+
+    f32 r = 0;
+    f32 increment = 0.05;
+
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window)) {
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
 
-        glClearError();
+        if (r > 1.0) {
+            increment = -0.05;
+        } else if (r < 0.0) {
+            increment = 0.05;
+        }
+        r += increment;
+        GL_CALL(glUniform4f(location, r, 0.3F, 0.8F, 1.0F))
         GL_CALL(glDrawElements(GL_TRIANGLES, sizeof(vertexIndices) / sizeof(vertexIndices[0]), GL_UNSIGNED_INT, nullptr))
-        glCheckError();
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
