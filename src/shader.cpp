@@ -4,6 +4,7 @@
 
 #include "shader.h"
 #include "io.h"
+#include "renderer.h"
 
 Shader::Shader(const char *filepath) {
     const Shader::ShaderSource &source = parseShaderSource(filepath);

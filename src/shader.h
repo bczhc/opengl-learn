@@ -7,7 +7,8 @@
 
 #include "shader_location.h"
 #include <string>
-#include "renderer.h"
+
+#include <GL/glew.h>
 
 using namespace std;
 

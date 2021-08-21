@@ -6,9 +6,12 @@
 #define OPENGL_VERTEX_BUFFER_LAYOUT_HPP
 
 #include <vector>
-#include "renderer.h"
 #include "todo.h"
 #include "cassert"
+#include "def.h"
+#include <GL/glew.h>
+
+using namespace std;
 
 struct VertexBufferElement {
     GLenum type;

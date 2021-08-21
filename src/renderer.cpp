@@ -20,3 +20,16 @@ bool glCheckError(const char *file, u32 line, const char *lineCode) {
     }
     return false;
 }
+
+void Renderer::draw(const VertexArray &va, const IndexBuffer &ib, const Shader &shader) const {
+    va.bind();
+    ib.bind();
+    shader.bind();
+
+    GL_CALL(glDrawElements(GL_TRIANGLES, ib.getCount(), GL_UNSIGNED_INT, nullptr))
+}
+
+void Renderer::clear() const {
+    GL_CALL(glClear(GL_COLOR_BUFFER_BIT))
+}
+

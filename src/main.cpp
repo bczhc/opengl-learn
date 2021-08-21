@@ -71,7 +71,7 @@ int main() {
         vl.push<f32>(2);
         va.addBuffer(vb, vl);
         IndexBuffer ib(vertexIndices, sizeof(vertexIndices) / sizeof(vertexIndices[0]));
-        
+
         Shader shader(SHADER_FILE_PATH);
         const ShaderLocation &shaderColorLocation = shader.findLocation("u_Color");
         shader.bind();
@@ -83,10 +83,12 @@ int main() {
         f32 r = 0;
         f32 increment = 0.05;
 
+        Renderer renderer;
+
         /* Loop until the user closes the window */
         while (!glfwWindowShouldClose(window)) {
             /* Render here */
-            glClear(GL_COLOR_BUFFER_BIT);
+            renderer.clear();
 
             if (r > 1.0) {
                 increment = -0.05;
@@ -98,11 +100,7 @@ int main() {
             shader.bind();
             shaderColorLocation.setUniform4f(r, 0.3F, 0.8F, 1.0F);
 
-            va.bind();
-            // also works without the ibo binding
-//        GL_CALL(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo))
-            GL_CALL(glDrawElements(GL_TRIANGLES, sizeof(vertexIndices) / sizeof(vertexIndices[0]), GL_UNSIGNED_INT,
-                                   nullptr))
+            renderer.draw(va, ib, shader);
 
             /* Swap front and back buffers */
             glfwSwapBuffers(window);
