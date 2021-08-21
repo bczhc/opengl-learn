@@ -155,10 +155,16 @@ int main() {
 
     cout << glGetString(GL_VERSION) << endl;
 
-    f32 vertices[6] = {
-            -0.5F, -0.5F,
-            0.0F, 0.5F,
-            0.5F, -0.5F
+    f32 vertices[] = {
+            -0.5F, -0.5F, // 0
+            0.5F, -0.5F, // 1
+            0.5F, 0.5F, // 2
+            -0.5F, 0.5F, // 3
+    };
+
+    GLuint vertexIndices[] = {
+            0, 1, 2,
+            2, 3, 0
     };
 
     u32 buffer;
@@ -169,6 +175,11 @@ int main() {
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(f32), nullptr);
 
+    u32 ibo;
+    glGenBuffers(1, &ibo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(vertexIndices), vertexIndices, GL_STATIC_DRAW);
+
     const ShaderSource &shaderSource = parseShaderSource(SHADER_FILE_PATH);
     u32 shaderProgram = createShader(shaderSource.vertex, shaderSource.fragment);
     glUseProgram(shaderProgram);
@@ -178,7 +189,7 @@ int main() {
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
 
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDrawElements(GL_TRIANGLES, sizeof(vertexIndices) / sizeof(vertexIndices[0]), GL_UNSIGNED_INT, nullptr);
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
