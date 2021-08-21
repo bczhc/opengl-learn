@@ -6,6 +6,8 @@
 #define OPENGL_DEF_H
 
 #include <cstdint>
+#include <cstddef>
+#include <sys/types.h>
 
 using i8 = int8_t;
 using u8 = uint8_t;

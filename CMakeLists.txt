@@ -12,6 +12,9 @@ add_executable(
         src/index_buffer.cpp
         src/vertex_array.cpp
         src/todo.cpp
+        src/shader.cpp
+        src/io.cpp
+        src/shader_location.cpp
 )
 
 target_link_libraries(main glfw GL GLEW)
