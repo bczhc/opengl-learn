@@ -7,11 +7,11 @@
 
 #include <GL/glew.h>
 #include <iostream>
-#include "types.h"
+#include "lib/types.h"
 #include "vertex_array.h"
 #include "index_buffer.h"
 #include "shader.h"
-#include "gl_error_check.h"
+#include "lib/gl_error_check.h"
 
 using namespace std;
 

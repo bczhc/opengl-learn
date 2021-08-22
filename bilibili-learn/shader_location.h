@@ -5,7 +5,7 @@
 #ifndef OPENGL_SHADER_LOCATION_H
 #define OPENGL_SHADER_LOCATION_H
 
-#include "types.h"
+#include "lib/types.h"
 
 class ShaderLocation {
 private:

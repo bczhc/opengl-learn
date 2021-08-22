@@ -3,7 +3,7 @@
 //
 
 #include "shader.h"
-#include "io.h"
+#include "lib/io.h"
 #include "renderer.h"
 
 Shader::Shader(const char *filepath) {

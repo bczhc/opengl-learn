@@ -1,7 +1,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
-#include "types.h"
+#include "lib/types.h"
 
 #include "renderer.h"
 #include "vertex_buffer.h"

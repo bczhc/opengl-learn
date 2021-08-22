@@ -5,15 +5,12 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <cstdlib>
-#include "../../types.h"
-#include "../../io.h"
+#include "lib/types.h"
+#include "lib/io.h"
 #include <iostream>
-#include "../../gl_error_check.h"
+#include "lib/gl_error_check.h"
 
 using namespace std;
-
-#define VERTEX_SHADER_FILE_PATH "/home/bczhc/code/opengl/res/vertex.glsl"
-#define FRAGMENT_SHADER_FILE_PATH "/home/bczhc/code/opengl/res/fragment.glsl"
 
 struct ShaderProgramSource {
     string vertex;

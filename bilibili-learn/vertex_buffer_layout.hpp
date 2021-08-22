@@ -6,9 +6,9 @@
 #define OPENGL_VERTEX_BUFFER_LAYOUT_HPP
 
 #include <vector>
-#include "todo.h"
+#include "lib/todo.h"
 #include "cassert"
-#include "types.h"
+#include "lib/types.h"
 #include <GL/glew.h>
 
 using namespace std;
