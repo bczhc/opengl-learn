@@ -5,7 +5,7 @@
 #ifndef OPENGL_INDEX_BUFFER_H
 #define OPENGL_INDEX_BUFFER_H
 
-#include "def.h"
+#include "types.h"
 
 class IndexBuffer {
 private:

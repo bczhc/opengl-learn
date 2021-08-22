@@ -1,21 +1,19 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
-#include "def.h"
-#include "exception.h"
-#include "option.hpp"
-#include <cstdlib>
-#include <cassert>
+#include "types.h"
 
 #include "renderer.h"
 #include "vertex_buffer.h"
 #include "index_buffer.h"
 #include "vertex_array.h"
 #include "shader.h"
+#include "texture.h"
 
 using namespace std;
 
 #define SHADER_FILE_PATH ("/home/bczhc/code/opengl/res/basic.glsl")
+#define TEXTURE_FILE_PATH ("/home/bczhc/code/opengl/res/png")
 
 int main() {
     GLFWwindow *window;
@@ -51,11 +49,11 @@ int main() {
     {
         glfwSwapInterval(1);
 
-        f32 vertices[] = {
-                -0.5F, -0.5F, // 0
-                0.5F, -0.5F, // 1
-                0.5F, 0.5F, // 2
-                -0.5F, 0.5F, // 3
+        f32 vertexBufferBytes[] = {
+                -0.5F, -0.5F, 0.0F, 0.0F, // 0
+                0.5F, -0.5F, 1.0F, 0.0F, // 1
+                0.5F, 0.5F, 1.0F, 1.0F, // 2
+                -0.5F, 0.5F, 0.0F, 1.0F, // 3
         };
 
         GLuint vertexIndices[] = {
@@ -65,20 +63,26 @@ int main() {
 
         VertexArray va;
 
-        VertexBuffer vb(vertices, sizeof(vertices));
+        VertexBuffer vb(vertexBufferBytes, sizeof(vertexBufferBytes));
 
         VertexBufferLayout vl;
+        vl.push<f32>(2);
         vl.push<f32>(2);
         va.addBuffer(vb, vl);
         IndexBuffer ib(vertexIndices, sizeof(vertexIndices) / sizeof(vertexIndices[0]));
 
         Shader shader(SHADER_FILE_PATH);
-        const ShaderLocation &shaderColorLocation = shader.findLocation("u_Color");
         shader.bind();
+        const ShaderLocation &shaderTextureLocation = shader.findLocation("u_Texture");
 
-        GL_CALL(glBindVertexArray(0))
-        GL_CALL(glUseProgram(0))
-        GL_CALL(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0))
+        Texture texture(TEXTURE_FILE_PATH);
+        texture.bind();
+        shaderTextureLocation.setUniform1i(0);
+
+        va.unbind();
+        vb.unbind();
+        ib.unbind();
+        shader.unbind();
 
         f32 r = 0;
         f32 increment = 0.05;
@@ -98,7 +102,6 @@ int main() {
             r += increment;
 
             shader.bind();
-            shaderColorLocation.setUniform4f(r, 0.3F, 0.8F, 1.0F);
 
             renderer.draw(va, ib, shader);
 

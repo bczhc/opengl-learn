@@ -1,0 +1,3 @@
+[submodule "src/third_party/stb_image"]
+	path = src/third_party/stb_image
+	url = https://hub.fastgit.org/bczhc/stb-image-single-header

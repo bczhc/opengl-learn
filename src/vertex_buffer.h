@@ -5,7 +5,7 @@
 #ifndef OPENGL_VERTEX_BUFFER_H
 #define OPENGL_VERTEX_BUFFER_H
 
-#include "def.h"
+#include "types.h"
 
 class VertexBuffer {
 private:

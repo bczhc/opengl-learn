@@ -8,7 +8,7 @@
 #include <vector>
 #include "todo.h"
 #include "cassert"
-#include "def.h"
+#include "types.h"
 #include <GL/glew.h>
 
 using namespace std;

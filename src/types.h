@@ -2,8 +2,8 @@
 // Created by bczhc on 8/20/21.
 //
 
-#ifndef OPENGL_DEF_H
-#define OPENGL_DEF_H
+#ifndef OPENGL_TYPES_H
+#define OPENGL_TYPES_H
 
 #include <cstdint>
 #include <cstddef>
@@ -22,4 +22,4 @@ using f64 = double;
 using isize = ssize_t;
 using usize = size_t;
 
-#endif //OPENGL_DEF_H
+#endif //OPENGL_TYPES_H
