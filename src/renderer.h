@@ -11,20 +11,9 @@
 #include "vertex_array.h"
 #include "index_buffer.h"
 #include "shader.h"
+#include "gl_error_check.h"
 
 using namespace std;
-
-#define GL_CALL(x) glClearError(); \
-    x;                            \
-    if (glCheckError(__FILE__, __LINE__, #x)) {          \
-        abort();                   \
-    }
-
-void glClearError();
-
-void glLogError(GLenum error, const char *file, u32 line, const char *lineCode);
-
-bool glCheckError(const char *file, u32 line, const char *lineCode);
 
 class Renderer {
 public:

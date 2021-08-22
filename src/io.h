@@ -10,4 +10,6 @@
 
 Option<std::string> readLine(FILE *fp);
 
+std::string readFileToString(const char* path);
+
 #endif //OPENGL_IO_H
