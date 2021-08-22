@@ -12,6 +12,27 @@
 
 using namespace std;
 
+void frameBufferSizeCallback(GLFWwindow *, int width, int height) {
+    GL_CALL(glViewport(0, 0, width, height))
+}
+
+void cursorCallback(GLFWwindow *, f64 x, f64 y) {
+    cout << x << ' ' << y << endl;
+}
+
+void keyCallback(GLFWwindow *window, i32 key, i32, i32, i32) {
+    if (key == GLFW_KEY_Q || key == GLFW_KEY_ESCAPE) {
+        glfwSetWindowShouldClose(window, GLFW_TRUE);
+    }
+}
+
+void configure(GLFWwindow *window) {
+    glfwSwapInterval(1);
+    glfwSetFramebufferSizeCallback(window, frameBufferSizeCallback);
+    glfwSetCursorPosCallback(window, cursorCallback);
+    glfwSetKeyCallback(window, keyCallback);
+}
+
 int main() {
     GLFWwindow *window;
 
@@ -43,8 +64,9 @@ int main() {
 
     cout << glGetString(GL_VERSION) << endl;
 
+    configure(window);
+
     {
-        glfwSwapInterval(1);
 
         f32 vertexBufferBytes[] = {
                 -0.5F, -0.5F, 0.0F, 0.0F, // 0
