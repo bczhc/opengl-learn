@@ -12,9 +12,6 @@
 
 using namespace std;
 
-#define SHADER_FILE_PATH ("/home/bczhc/code/opengl/res/basic.glsl")
-#define TEXTURE_FILE_PATH ("/home/bczhc/code/opengl/res/png")
-
 int main() {
     GLFWwindow *window;
 
@@ -71,11 +68,11 @@ int main() {
         va.addBuffer(vb, vl);
         IndexBuffer ib(vertexIndices, sizeof(vertexIndices) / sizeof(vertexIndices[0]));
 
-        Shader shader(SHADER_FILE_PATH);
+        Shader shader(OPENGL_SHADER_FILE_PATH);
         shader.bind();
         const ShaderLocation &shaderTextureLocation = shader.findLocation("u_Texture");
 
-        Texture texture(TEXTURE_FILE_PATH);
+        Texture texture(OPENGL_TEXTURE_FILE_PATH);
         texture.bind();
         shaderTextureLocation.setUniform1i(0);
 

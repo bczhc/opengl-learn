@@ -1,6 +1,11 @@
 cmake_minimum_required(VERSION 3.19)
 project(opengl)
 
+add_compile_definitions(
+        OPENGL_SHADER_FILE_PATH="${PROJECT_SOURCE_DIR}/res/basic.glsl"
+        OPENGL_TEXTURE_FILE_PATH="${PROJECT_SOURCE_DIR}/res/png"
+)
+
 set(CMAKE_CXX_STANDARD 20)
 
 add_executable(
