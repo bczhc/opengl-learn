@@ -27,7 +27,6 @@ ShaderLocation Shader::findLocation(const char *name) const {
     GL_CALL(i32 location = glGetUniformLocation(program, name))
     if (location == -1) {
         cout << "WARNING: Shader uniform \"" << name << "\" location not found" << endl;
-        return ShaderLocation(0);
     }
     return ShaderLocation(location);
 }

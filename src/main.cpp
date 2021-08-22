@@ -70,6 +70,7 @@ int main() {
 
         Shader shader(OPENGL_SHADER_FILE_PATH);
         shader.bind();
+        const ShaderLocation &shaderColorLocation = shader.findLocation("u_Color");
         const ShaderLocation &shaderTextureLocation = shader.findLocation("u_Texture");
 
         Texture texture(OPENGL_TEXTURE_FILE_PATH);
@@ -99,6 +100,7 @@ int main() {
             r += increment;
 
             shader.bind();
+            shaderColorLocation.setUniform4f(r, 0.3F, 0.8F, 1.0F);
 
             renderer.draw(va, ib, shader);
 
