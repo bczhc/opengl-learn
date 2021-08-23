@@ -26,13 +26,15 @@ public:
 
     ShaderLocation findLocation(const char *name) const;
 
+    [[nodiscard]] u32 getProgram() const;
+
 private:
     struct ShaderSource {
         string vertex;
         string fragment;
     };
 
-    static u32 compileShader(const char* source, GLenum type);
+    static u32 compileShader(const char *source, GLenum type);
 
     static u32 compileShaderProgram(const string &vertexShaderSrc, const string &fragmentShaderSrc);
 };

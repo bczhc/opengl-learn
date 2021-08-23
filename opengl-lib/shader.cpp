@@ -78,3 +78,7 @@ u32 ShaderProgram::compileShaderProgram(const string &vertexShaderSrc, const str
     glDeleteShader(fs);
     return program;
 }
+
+u32 ShaderProgram::getProgram() const {
+    return program;
+}

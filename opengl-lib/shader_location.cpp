@@ -18,3 +18,9 @@ void ShaderLocation::setUniform1i(i32 i) const {
         GL_CALL(glUniform1i(location, i))
     }
 }
+
+void ShaderLocation::setUniform1f(f32 f) const {
+    if (location != -1) {
+        GL_CALL(glUniform1f(location, f))
+    }
+}

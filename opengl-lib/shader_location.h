@@ -16,6 +16,8 @@ public:
     void setUniform4f(f32 v0, f32 v1, f32 v2, f32 v3) const;
 
     void setUniform1i(i32 i) const;
+
+    void setUniform1f(f32 f) const;
 };
 
 #endif //OPENGL_SHADER_LOCATION_H

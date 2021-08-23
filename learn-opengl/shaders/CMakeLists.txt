@@ -15,3 +15,11 @@ target_compile_definitions(
         VERTEX_SHADER_FILE_PATH="${PROJECT_SOURCE_DIR}/shaders/exercise1-vertex.glsl"
         FRAGMENT_SHADER_FILE_PATH="${PROJECT_SOURCE_DIR}/shaders/fragment.glsl"
 )
+
+add_executable(shaders-exercise2 exercise2.cpp)
+target_link_libraries(shaders-exercise2 opengl-lib)
+target_compile_definitions(
+        shaders-exercise2 PRIVATE
+        VERTEX_SHADER_FILE_PATH="${PROJECT_SOURCE_DIR}/shaders/exercise2-vertex.glsl"
+        FRAGMENT_SHADER_FILE_PATH="${PROJECT_SOURCE_DIR}/shaders/fragment.glsl"
+)
