@@ -7,4 +7,5 @@ target_compile_definitions(
         VERTEX_SHADER_FILE_PATH="${PROJECT_SOURCE_DIR}/shaders/vertex.glsl"
         FRAGMENT_SHADER_FILE_PATH="${PROJECT_SOURCE_DIR}/shaders/fragment.glsl"
         TEXTURE_IMAGE_FILE_PATH="${PROJECT_SOURCE_DIR}/res/wall.jpg"
+        TEXTURE_IMAGE2_FILE_PATH="${PROJECT_SOURCE_DIR}/res/face.png"
 )
