@@ -8,6 +8,7 @@ in vec3 f_color;
 
 uniform sampler2D texture_sampler;
 uniform sampler2D texture2_sampler;
+uniform float mix_ratio;
 
 void main() {
     //    color = vec4(0.1F, 0.3F, 0.5F, 1.0F);
@@ -19,6 +20,6 @@ void main() {
     if (tex_color2.a == 0.0F) {
         color = tex_color1 * f_color_vec4;
     } else {
-        color = mix(tex_color1, tex_color2, 0.4F) * f_color_vec4;
+        color = mix(tex_color1, tex_color2, mix_ratio) * f_color_vec4;
     }
 }

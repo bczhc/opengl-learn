@@ -6,6 +6,16 @@
 #include "opengl-lib/shader.h"
 #include "third_party/stb_image.h"
 
+static f32 gMixRatio = 0.0;
+
+void keyCallback(GLFWwindow*, i32 key, i32, i32, i32) {
+    if (key == GLFW_KEY_UP && gMixRatio < 1.0F) {
+        gMixRatio += 0.01F;
+    } else if (key == GLFW_KEY_DOWN && gMixRatio > 0.0F) {
+        gMixRatio -= 0.01F;
+    }
+}
+
 class TextureImage {
 public:
     i32 width{}, height{}, channel{};
@@ -25,7 +35,7 @@ int main() {
     GLFWwindow *window = opengl_lib::initAndCreateWindow(500, 500, "Window");
 
     opengl_lib::setAutoViewportWhenWindowSizeChanged(window);
-    opengl_lib::setQuitWhenKeyListened(window);
+    glfwSetKeyCallback(window, keyCallback);
 
     f32 buffer[] = {
             // position (2) | color (3) | texture coordinate (2) | texture2 coordinate (2)
@@ -99,6 +109,7 @@ int main() {
     program->bind();
     const ShaderLocation &shaderTextureSampler = program->findLocation("texture_sampler");
     const ShaderLocation &shaderTexture2Sampler = program->findLocation("texture2_sampler");
+    const ShaderLocation &shaderMixRatio = program->findLocation("mix_ratio");
     shaderTextureSampler.setUniform1i(0);
     shaderTexture2Sampler.setUniform1i(1);
 
@@ -106,6 +117,8 @@ int main() {
         glClear(GL_COLOR_BUFFER_BIT);
 
         program->bind();
+        shaderMixRatio.setUniform1f(gMixRatio);
+
         glBindVertexArray(va);
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture);

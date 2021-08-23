@@ -29,33 +29,22 @@ int main() {
 
     f32 buffer[] = {
             // position (2) | color (3) | texture coordinate (2) | texture2 coordinate (2)
-            -0.5F, -0.5F, 0.0F, 0.0F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F,
-            0.5F, -0.5F, 0.0F, 1.0F, 0.0F, 1.0F, 0.0F, 1.0F, 0.0F,
-            0.5F, 0.5F, 1.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F, 1.0F,
-            -0.5F, 0.5F, 1.0F, 1.0F, 0.0F, 0.0F, 1.0F, 0.0F, 1.0F
-    };
-
-    u32 indices[] = {
-            0, 1, 2,
-            2, 3, 0
+            -0.5F, -0.5F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, -0.2F, 0.0F,
+            0.5F, -0.5F, 0.0F, 1.0F, 0.0F, 1.0F, 0.0F, 1.2F, 0.0F,
+            0.0F, 0.5F, 0.0F, 0.0F, 1.0F, 0.5F, 1.0F, 0.5F, 1.7F
     };
 
     u32 vb;
     glGenBuffers(1, &vb);
     u32 va;
     glGenVertexArrays(1, &va);
-    u32 ib;
-    glGenBuffers(1, &ib);
 
     glBindVertexArray(va);
 
     glBindBuffer(GL_ARRAY_BUFFER, vb);
     glBufferData(GL_ARRAY_BUFFER, sizeof(buffer), buffer, GL_STATIC_DRAW);
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ib);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-    i32 strip = sizeof(buffer) / 4;
+    i32 strip = sizeof(buffer) / 3;
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, strip, nullptr);
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, strip, (const void *) (2 * sizeof(f32)));
@@ -64,10 +53,6 @@ int main() {
     glEnableVertexAttribArray(2);
     glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, strip, (const void *) (7 * sizeof(f32)));
     glEnableVertexAttribArray(3);
-
-    glBindVertexArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
     TextureImage image(TEXTURE_IMAGE_FILE_PATH);
     u32 texture;
@@ -93,6 +78,8 @@ int main() {
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, image2.width, image2.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image2.data);
     glGenerateMipmap(GL_TEXTURE_2D);
 
+    glBindVertexArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindTexture(GL_TEXTURE_2D, 0);
 
     auto program = new ShaderProgram(VERTEX_SHADER_FILE_PATH, FRAGMENT_SHADER_FILE_PATH);
@@ -112,7 +99,7 @@ int main() {
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, texture2);
 
-        glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(indices[0]), GL_UNSIGNED_INT, nullptr);
+        glDrawArrays(GL_TRIANGLES, 0, 3);
 
         glfwPollEvents();
         glfwSwapBuffers(window);

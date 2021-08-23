@@ -14,7 +14,7 @@ void main() {
     vec4 f_color_vec4 = vec4(f_color.rgb, 1.0F);
     //    color = mix(texture(texture_sampler, tex_coords), texture(texture2_sampler, tex2_coords), 0.3F);
     vec4 tex_color1 = texture(texture_sampler, tex_coords);
-    vec4 tex_color2 = texture(texture2_sampler, tex2_coords);
+    vec4 tex_color2 = texture(texture2_sampler, vec2(1.0F - tex2_coords.x, tex2_coords.y));
 
     if (tex_color2.a == 0.0F) {
         color = tex_color1 * f_color_vec4;
