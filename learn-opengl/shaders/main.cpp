@@ -57,4 +57,6 @@ int main() {
     openglOperations(window);
 
     glfwTerminate();
+
+    return 0;
 }
