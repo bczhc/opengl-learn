@@ -4,7 +4,7 @@
 
 #include "renderer.h"
 
-void Renderer::draw(const VertexArray &va, const IndexBuffer &ib, const Shader &shader) const {
+void Renderer::draw(const VertexArray &va, const IndexBuffer &ib, const ShaderProgram &shader) const {
     va.bind();
     ib.bind();
     shader.bind();

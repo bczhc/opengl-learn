@@ -14,7 +14,8 @@ add_executable(
 
 target_compile_definitions(
         bilibili-learn PRIVATE
-        OPENGL_SHADER_FILE_PATH="${PROJECT_SOURCE_DIR}/res/basic.glsl"
+        VERTEX_SHADER_FILE_PATH="${PROJECT_SOURCE_DIR}/shaders/vertex.glsl"
+        FRAGMENT_SHADER_FILE_PATH="${PROJECT_SOURCE_DIR}/shaders/fragment.glsl"
         OPENGL_TEXTURE_FILE_PATH="${PROJECT_SOURCE_DIR}/res/texture.png"
 )
 

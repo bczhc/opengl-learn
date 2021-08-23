@@ -2,8 +2,8 @@
 // Created by bczhc on 8/23/21.
 //
 
-#include <iostream>
 #include "opengl-lib/lib.h"
+#include "opengl-lib/shader.h"
 
 using namespace std;
 
@@ -14,6 +14,8 @@ int main() {
 
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT);
+
+
 
         glfwSwapBuffers(window);
         glfwPollEvents();

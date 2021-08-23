@@ -44,6 +44,6 @@ GLFWwindow *opengl_lib::initAndCreateWindow(i32 width, i32 height, const char *t
 
 void opengl_lib::setAutoViewportWhenWindowSizeChanged(GLFWwindow *window) {
     glfwSetFramebufferSizeCallback(window, [](GLFWwindow *, i32 width, i32 height) {
-        glViewport(0, 0, width, height);
+        GL_CALL(glViewport(0, 0, width, height))
     });
 }

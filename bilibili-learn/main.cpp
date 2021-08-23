@@ -90,7 +90,7 @@ int main() {
         va.addBuffer(vb, vl);
         IndexBuffer ib(vertexIndices, sizeof(vertexIndices) / sizeof(vertexIndices[0]));
 
-        Shader shader(OPENGL_SHADER_FILE_PATH);
+        ShaderProgram shader(VERTEX_SHADER_FILE_PATH, FRAGMENT_SHADER_FILE_PATH);
         shader.bind();
         const ShaderLocation &shaderColorLocation = shader.findLocation("u_Color");
         const ShaderLocation &shaderTextureLocation = shader.findLocation("u_Texture");

@@ -9,6 +9,7 @@
 #include <GLFW/glfw3.h>
 #include "lib/types.h"
 #include "lib/exception.h"
+#include "error_check.h"
 
 namespace opengl_lib {
     class GLFWException : public Exception {

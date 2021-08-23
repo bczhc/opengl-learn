@@ -6,24 +6,26 @@
 #include "lib/io.h"
 #include "opengl-lib/error_check.h"
 
-Shader::Shader(const char *filepath) {
-    const Shader::ShaderSource &source = parseShaderSource(filepath);
-    program = compileShaderProgram(source.vertex, source.fragment);
+ShaderProgram::ShaderProgram(const char *vertexShaderPath, const char *fragmentShaderPath) {
+    program = compileShaderProgram(
+            readFileToString(vertexShaderPath),
+            readFileToString(fragmentShaderPath)
+    );
 }
 
-Shader::~Shader() {
+ShaderProgram::~ShaderProgram() {
     GL_CALL(glDeleteProgram(program))
 }
 
-void Shader::bind() const {
+void ShaderProgram::bind() const {
     GL_CALL(glUseProgram(program))
 }
 
-void Shader::unbind() const {
+void ShaderProgram::unbind() const {
     GL_CALL(glUseProgram(0))
 }
 
-ShaderLocation Shader::findLocation(const char *name) const {
+ShaderLocation ShaderProgram::findLocation(const char *name) const {
     GL_CALL(i32 location = glGetUniformLocation(program, name))
     if (location == -1) {
         cout << "WARNING: Shader uniform \"" << name << "\" location not found" << endl;
@@ -31,57 +33,9 @@ ShaderLocation Shader::findLocation(const char *name) const {
     return ShaderLocation(location);
 }
 
-Shader::ShaderSource Shader::parseShaderSource(const char *path) {
-    FILE *fp = fopen(path, "rb");
-    if (fp == nullptr) {
-        throw IOException("Failed to open shader file");
-    }
-
-    string vertexSrc, fragmentSrc;
-    ShaderType type = ShaderType::UNKNOWN;
-    bool shaderMarkLine = false;
-    while (true) {
-        const Option<string> &option = readLine(fp);
-        if (option.isNone()) {
-            break;
-        }
-        auto line = option.get();
-
-        if (line.starts_with("#shader vertex")) {
-            type = ShaderType::VERTEX;
-            shaderMarkLine = true;
-        }
-        if (line.starts_with("#shader fragment")) {
-            type = ShaderType::FRAGMENT;
-            shaderMarkLine = true;
-        }
-
-        if (shaderMarkLine) {
-            shaderMarkLine = false;
-            continue;
-        }
-        switch (type) {
-            case VERTEX:
-                vertexSrc.append(line).push_back('\n');
-                break;
-            case FRAGMENT:
-                fragmentSrc.append(line).push_back('\n');
-                break;
-            default:
-                break;
-        }
-    }
-    fclose(fp);
-    return {
-            .vertex = vertexSrc,
-            .fragment = fragmentSrc
-    };
-}
-
-u32 Shader::compileShader(const string &source, GLenum type) {
+u32 ShaderProgram::compileShader(const char *source, GLenum type) {
     u32 shader = glCreateShader(type);
-    const char *src = source.c_str();
-    glShaderSource(shader, 1, &src, nullptr);
+    glShaderSource(shader, 1, &source, nullptr);
     glCompileShader(shader);
 
     i32 result;
@@ -110,10 +64,10 @@ u32 Shader::compileShader(const string &source, GLenum type) {
     return shader;
 }
 
-u32 Shader::compileShaderProgram(const string &vertexShaderSrc, const string &fragmentShaderSrc) {
+u32 ShaderProgram::compileShaderProgram(const string &vertexShaderSrc, const string &fragmentShaderSrc) {
     u32 program = glCreateProgram();
-    u32 vs = compileShader(vertexShaderSrc, GL_VERTEX_SHADER);
-    u32 fs = compileShader(fragmentShaderSrc, GL_FRAGMENT_SHADER);
+    u32 vs = compileShader(vertexShaderSrc.c_str(), GL_VERTEX_SHADER);
+    u32 fs = compileShader(fragmentShaderSrc.c_str(), GL_FRAGMENT_SHADER);
 
     glAttachShader(program, vs);
     glAttachShader(program, fs);

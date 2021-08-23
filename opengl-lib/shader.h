@@ -12,13 +12,13 @@
 
 using namespace std;
 
-class Shader {
+class ShaderProgram {
 private:
     u32 program;
 public:
-    explicit Shader(const char *filepath);
+    explicit ShaderProgram(const char *vertexShaderPath, const char *fragmentShaderPath);
 
-    ~Shader();
+    ~ShaderProgram();
 
     void bind() const;
 
@@ -27,20 +27,12 @@ public:
     ShaderLocation findLocation(const char *name) const;
 
 private:
-    enum ShaderType {
-        UNKNOWN,
-        VERTEX,
-        FRAGMENT
-    };
-
     struct ShaderSource {
         string vertex;
         string fragment;
     };
 
-    static ShaderSource parseShaderSource(const char *path);
-
-    static u32 compileShader(const string &source, GLenum type);
+    static u32 compileShader(const char* source, GLenum type);
 
     static u32 compileShaderProgram(const string &vertexShaderSrc, const string &fragmentShaderSrc);
 };
