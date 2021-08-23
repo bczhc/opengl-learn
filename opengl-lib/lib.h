@@ -29,6 +29,8 @@ namespace opengl_lib {
     GLFWwindow* initAndCreateWindow(i32 width, i32 height, const char* title);
 
     void setAutoViewportWhenWindowSizeChanged(GLFWwindow *window);
+
+    void setQuitWhenKeyListened(GLFWwindow *window);
 }
 
 #endif //OPENGL_LIB_H

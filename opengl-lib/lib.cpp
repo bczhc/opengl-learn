@@ -47,3 +47,12 @@ void opengl_lib::setAutoViewportWhenWindowSizeChanged(GLFWwindow *window) {
         GL_CALL(glViewport(0, 0, width, height))
     });
 }
+
+void opengl_lib::setQuitWhenKeyListened(GLFWwindow *window) {
+    glfwSetKeyCallback(window, [](GLFWwindow* w, i32 key, i32, i32, i32) {
+        if (key == GLFW_KEY_Q || key == GLFW_KEY_ESCAPE) {
+            glfwSetWindowShouldClose(w, GLFW_TRUE);
+        }
+    });
+}
+
