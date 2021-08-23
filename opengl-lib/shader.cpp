@@ -4,7 +4,7 @@
 
 #include "shader.h"
 #include "lib/io.h"
-#include "renderer.h"
+#include "opengl-lib/error_check.h"
 
 Shader::Shader(const char *filepath) {
     const Shader::ShaderSource &source = parseShaderSource(filepath);

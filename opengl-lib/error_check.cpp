@@ -2,7 +2,7 @@
 // Created by bczhc on 8/22/21.
 //
 
-#include "gl_error_check.h"
+#include "error_check.h"
 #include <iostream>
 
 using namespace std;

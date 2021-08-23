@@ -10,8 +10,8 @@
 #include "lib/types.h"
 #include "vertex_array.h"
 #include "index_buffer.h"
-#include "shader.h"
-#include "lib/gl_error_check.h"
+#include "opengl-lib/shader.h"
+#include "opengl-lib/error_check.h"
 
 using namespace std;
 

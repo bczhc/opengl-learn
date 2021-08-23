@@ -7,7 +7,7 @@
 #include "vertex_buffer.h"
 #include "index_buffer.h"
 #include "vertex_array.h"
-#include "shader.h"
+#include "opengl-lib/shader.h"
 #include "texture.h"
 
 using namespace std;

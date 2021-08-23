@@ -8,5 +8,4 @@ add_library(
         todo.cpp
         io.cpp
         stb_image.cpp
-        gl_error_check.cpp
 )

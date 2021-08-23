@@ -3,7 +3,7 @@
 //
 
 #include "index_buffer.h"
-#include "renderer.h"
+#include "opengl-lib/error_check.h"
 
 IndexBuffer::IndexBuffer(const u32 *data, usize count) : count(count) {
     GL_CALL(glGenBuffers(1, &bufferId))

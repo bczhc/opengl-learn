@@ -3,7 +3,7 @@
 //
 
 #include "shader_location.h"
-#include "renderer.h"
+#include "opengl-lib/error_check.h"
 
 ShaderLocation::ShaderLocation(i32 location) : location(location) {}
 

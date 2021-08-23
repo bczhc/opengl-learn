@@ -9,8 +9,6 @@ add_executable(
         vertex_buffer.cpp
         index_buffer.cpp
         vertex_array.cpp
-        shader.cpp
-        shader_location.cpp
         texture.cpp
 )
 
@@ -20,4 +18,4 @@ target_compile_definitions(
         OPENGL_TEXTURE_FILE_PATH="${PROJECT_SOURCE_DIR}/res/texture.png"
 )
 
-target_link_libraries(bilibili-learn glfw GL GLEW lib)
+target_link_libraries(bilibili-learn opengl-lib)

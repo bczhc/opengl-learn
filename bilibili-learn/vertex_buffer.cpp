@@ -3,7 +3,7 @@
 //
 
 #include "vertex_buffer.h"
-#include "renderer.h"
+#include "opengl-lib/error_check.h"
 
 VertexBuffer::VertexBuffer(void *data, usize size) {
     GL_CALL(glGenBuffers(1, &bufferId))

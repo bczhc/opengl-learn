@@ -8,7 +8,7 @@
 #include "lib/types.h"
 #include "lib/io.h"
 #include <iostream>
-#include "lib/gl_error_check.h"
+#include "opengl-lib/error_check.h"
 
 using namespace std;
 

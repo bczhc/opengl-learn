@@ -6,7 +6,8 @@
 #define OPENGL_GL_ERROR_CHECK_CALL_H
 
 #include <GL/glew.h>
-#include "types.h"
+#include "lib/types.h"
+#include <cstdlib>
 
 #define GL_CALL(x) glClearError(); \
     x;                            \
