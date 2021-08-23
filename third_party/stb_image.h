@@ -5,6 +5,6 @@
 #ifndef OPENGL_STB_IMAGE_H
 #define OPENGL_STB_IMAGE_H
 
-#include "third_party/stb_image/stb_image.h"
+#include "stb_image/stb_image.h"
 
 #endif //OPENGL_STB_IMAGE_H

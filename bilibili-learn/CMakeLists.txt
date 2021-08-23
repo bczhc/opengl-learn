@@ -19,4 +19,4 @@ target_compile_definitions(
         OPENGL_TEXTURE_FILE_PATH="${PROJECT_SOURCE_DIR}/res/texture.png"
 )
 
-target_link_libraries(bilibili-learn opengl-lib)
+target_link_libraries(bilibili-learn opengl-lib stb_image)

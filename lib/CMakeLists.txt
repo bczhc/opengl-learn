@@ -7,5 +7,4 @@ add_library(
         exception.cpp
         todo.cpp
         io.cpp
-        stb_image.cpp
 )

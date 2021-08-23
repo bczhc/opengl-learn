@@ -4,7 +4,7 @@
 
 #include "texture.h"
 #include "opengl-lib/error_check.h"
-#include "lib/stb_image.h"
+#include "third_party/stb_image.h"
 
 Texture::Texture(const char *filepath) : filepath(filepath), textureId(0), width(0), height(0), bpp(0), localBuffer(
         nullptr) {
