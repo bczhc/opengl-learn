@@ -110,14 +110,14 @@ int main() {
     const ShaderLocation &shaderTextureSampler = program->findLocation("texture_sampler");
     const ShaderLocation &shaderTexture2Sampler = program->findLocation("texture2_sampler");
     const ShaderLocation &shaderMixRatio = program->findLocation("mix_ratio");
-    shaderTextureSampler.setUniform1i(0);
-    shaderTexture2Sampler.setUniform1i(1);
+    shaderTextureSampler.setUniform(0);
+    shaderTexture2Sampler.setUniform(1);
 
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT);
 
         program->bind();
-        shaderMixRatio.setUniform1f(gMixRatio);
+        shaderMixRatio.setUniform(gMixRatio);
 
         glBindVertexArray(va);
         glActiveTexture(GL_TEXTURE0);

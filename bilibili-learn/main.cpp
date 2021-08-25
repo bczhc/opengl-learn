@@ -97,7 +97,7 @@ int main() {
 
         Texture texture(OPENGL_TEXTURE_FILE_PATH);
         texture.bind();
-        shaderTextureLocation.setUniform1i(0);
+        shaderTextureLocation.setUniform(0);
 
         va.unbind();
         vb.unbind();
@@ -122,7 +122,7 @@ int main() {
             r += increment;
 
             shader.bind();
-            shaderColorLocation.setUniform4f(r, 0.3F, 0.8F, 1.0F);
+            shaderColorLocation.setUniform(r, 0.3F, 0.8F, 1.0F);
 
             renderer.draw(va, ib, shader);
 

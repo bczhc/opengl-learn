@@ -38,7 +38,7 @@ void openglOperations(GLFWwindow *window) {
         glClear(GL_COLOR_BUFFER_BIT);
 
         program.bind();
-        shaderVerticalOffset.setUniform1f(0.5F);
+        shaderVerticalOffset.setUniform(0.5F);
         glBindVertexArray(va);
 
         glDrawArrays(GL_TRIANGLES, 0, 3);
