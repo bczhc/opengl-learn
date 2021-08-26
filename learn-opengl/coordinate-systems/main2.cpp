@@ -125,7 +125,7 @@ void openglOperation(GLFWwindow *window) {
 
     glEnable(GL_DEPTH_TEST);
 
-#ifdef CODE_MAIN_3
+#if defined(CODE_MAIN_3) || defined(CODE_EXERCISE_4)
     glm::vec3 modelTranslations[] = {
             glm::vec3(0.0f, 0.0f, 0.0f),
             glm::vec3(2.0f, 5.0f, -15.0f),
@@ -159,18 +159,27 @@ void openglOperation(GLFWwindow *window) {
         glDrawArrays(GL_TRIANGLES, 0, 36);
 #elif defined(CODE_MAIN_3)
         for (u32 i = 0; i < 10; ++i) {
-                auto translation = modelTranslations[i];
-                glm::mat4 modelMatrix = glm::mat4(1.0F);
-                modelMatrix = glm::translate(modelMatrix, translation);
-                modelMatrix = glm::rotate(
-                        modelMatrix, (f32) glfwGetTime() + glm::radians(50.0F * (f32) i),
-                        glm::vec3(rand(), rand(), rand())
-                );
-                shaderTransformation.model.setUniformMatrix(glm::value_ptr(modelMatrix));
-                glDrawArrays(GL_TRIANGLES, 0, 36);
-            }
+            auto translation = modelTranslations[i];
+            glm::mat4 modelMatrix = glm::mat4(1.0F);
+            modelMatrix = glm::translate(modelMatrix, translation);
+            modelMatrix = glm::rotate(
+                    modelMatrix, (f32) glfwGetTime() + glm::radians(50.0F * (f32) i),
+                    glm::vec3(rand(), rand(), rand())
+            );
+            shaderTransformation.model.setUniformMatrix(glm::value_ptr(modelMatrix));
+            glDrawArrays(GL_TRIANGLES, 0, 36);
+        }
 #elif defined(CODE_EXERCISE_4)
-
+        for (u32 i = 0; i < 10; ++i) {
+            auto translation = modelTranslations[i];
+            glm::mat4 modelMatrix = glm::mat4(1.0F);
+            modelMatrix = glm::translate(modelMatrix, translation);
+            if (i % 3 == 0) {
+                modelMatrix = glm::rotate(modelMatrix, (f32) glfwGetTime(), glm::vec3(1.0F, 0.3F, 0.5F));
+            }
+            shaderTransformation.model.setUniformMatrix(glm::value_ptr(modelMatrix));
+            glDrawArrays(GL_TRIANGLES, 0, 36);
+        }
 #else
 #error missing learning phase (chapter) definition
 #endif
