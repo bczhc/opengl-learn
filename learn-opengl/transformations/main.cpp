@@ -106,6 +106,16 @@ int main() {
     shaderTextureSampler.setUniform(0);
     shaderTexture2Sampler.setUniform(1);
 
+#ifdef CODE_EXERCISE2
+    auto program2 = new ShaderProgram(VERTEX_SHADER_FILE_PATH2, FRAGMENT_SHADER_FILE_PATH2);
+    auto transformationMatrix2 = program2->findLocation("trans");
+    glm::vec3 translateVec2(-0.5F, 0.5F, 0.0F);
+
+    program2->bind();
+    program2->findLocation("texture_sampler").setUniform(0);
+    program2->findLocation("texture2_sampler").setUniform(1);
+#endif
+
     glm::vec3 translateVec(0.5F, -0.5F, 0.0F);
     glm::vec3 rotatePivot(0.0F, 0.0F, 1.0F);
     while (!glfwWindowShouldClose(window)) {
@@ -114,14 +124,14 @@ int main() {
         program->bind();
 
         glm::mat4 trans(1.0F);
-#ifdef CODE_MAIN
-        trans = glm::translate(trans, translateVec);
-        trans = glm::rotate(trans, (f32) glfwGetTime(), rotatePivot);
-#elif defined(CODE_EXERCISE1)
+#ifdef CODE_EXERCISE1
         trans = glm::rotate(trans, (f32) glfwGetTime(), rotatePivot);
         trans = glm::translate(trans, translateVec);
         // the reason is because glm transformations do a pre-multiplication, so the
         // transformation order is reversed
+#else
+        trans = glm::translate(trans, translateVec);
+        trans = glm::rotate(trans, (f32) glfwGetTime(), rotatePivot);
 #endif
         transformationMatrix.setUniformMatrix(glm::value_ptr(trans));
 
@@ -132,6 +142,20 @@ int main() {
         glBindTexture(GL_TEXTURE_2D, texture2);
 
         glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(indices[0]), GL_UNSIGNED_INT, nullptr);
+#ifdef CODE_EXERCISE2
+        program2->bind();
+
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, texture);
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, texture2);
+
+        glm::mat4 trans2(1.0F);
+        trans2 = glm::translate(trans2, translateVec2);
+        trans2 = glm::scale(trans2, glm::vec3((float) sin(glfwGetTime())));
+        transformationMatrix2.setUniformMatrix(glm::value_ptr(trans2));
+        glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(indices[0]), GL_UNSIGNED_INT, nullptr);
+#endif
 
         glfwPollEvents();
         glfwSwapBuffers(window);
@@ -140,6 +164,9 @@ int main() {
     glDeleteVertexArrays(1, &va);
     glDeleteBuffers(1, &vb);
     delete program;
+#ifdef CODE_EXERCISE2
+    delete program2;
+#endif
     glfwTerminate();
     return 0;
 }
