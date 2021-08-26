@@ -34,3 +34,4 @@ target_compile_definitions(
         TEXTURE_IMAGE2_FILE_PATH="${PROJECT_SOURCE_DIR}/../textures/res/face.png"
         CODE_EXERCISE2
 )
+
