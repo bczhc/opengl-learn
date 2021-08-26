@@ -30,3 +30,9 @@ void ShaderLocation::setUniform(bool b) const {
         GL_CALL(glUniform1ui(location, (u32) b))
     }
 }
+
+void ShaderLocation::setUniformMatrix(GLfloat *value) const {
+    if (location != -1) {
+        GL_CALL(glUniformMatrix4fv(location, 1, GL_FALSE, value))
+    }
+}

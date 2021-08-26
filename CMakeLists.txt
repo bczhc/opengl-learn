@@ -4,6 +4,8 @@ project(opengl)
 set(CMAKE_CXX_STANDARD 20)
 
 include_directories(.)
+include_directories(third_party/stb_image)
+include_directories(third_party/glm-headers)
 
 add_subdirectory(lib)
 add_subdirectory(opengl-lib)

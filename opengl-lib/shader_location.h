@@ -6,6 +6,7 @@
 #define OPENGL_SHADER_LOCATION_H
 
 #include "lib/types.h"
+#include <opengl-lib/lib.h>
 
 class ShaderLocation {
 private:
@@ -20,6 +21,8 @@ public:
     void setUniform(f32 f) const;
 
     void setUniform(bool b) const;
+
+    void setUniformMatrix(GLfloat *value) const;
 };
 
 #endif //OPENGL_SHADER_LOCATION_H

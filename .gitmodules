@@ -1,3 +1,6 @@
 [submodule "third_party/stb_image"]
 	path = third_party/stb_image
 	url = https://hub.fastgit.org/bczhc/stb-image-single-header
+[submodule "third_party/glm-headers"]
+	path = third_party/glm-headers
+	url = https://hub.fastgit.org/bczhc/glm-headers
