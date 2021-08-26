@@ -106,15 +106,18 @@ int main() {
     shaderTextureSampler.setUniform(0);
     shaderTexture2Sampler.setUniform(1);
 
-    glm::mat4 trans(1.0F);
-    trans = glm::rotate(trans, glm::radians(90.0F), glm::vec3(0.0F, 0.0F, 1.0F));
-    trans = glm::scale(trans, glm::vec3(0.5F));
-    transformationMatrix.setUniformMatrix(glm::value_ptr(trans));
-
+    glm::vec3 translateVec(0.5F, -0.5F, 0.0F);
+    glm::vec3 rotatePivot(0.0F, 0.0F, 1.0F);
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT);
 
         program->bind();
+
+        glm::mat4 trans(1.0F);
+        trans = glm::translate(trans, translateVec);
+        trans = glm::rotate(trans, (f32) glfwGetTime(), rotatePivot);
+        transformationMatrix.setUniformMatrix(glm::value_ptr(trans));
+
         glBindVertexArray(va);
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture);
