@@ -32,7 +32,7 @@ void openglOperations(GLFWwindow *window) {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     ShaderProgram program(VERTEX_SHADER_FILE_PATH, FRAGMENT_SHADER_FILE_PATH);
-    const ShaderLocation &shaderVerticalOffset = program.findLocation("vertical_offset");
+    const ShaderLocation &shaderVerticalOffset = program.findLocation("x_offset");
 
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT);
